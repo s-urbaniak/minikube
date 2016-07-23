@@ -41,6 +41,11 @@ func StartKubeletServer(lk LocalkubeServer) func() error {
 	config.ClusterDomain = lk.DNSDomain
 	config.ClusterDNS = lk.DNSIP.String()
 
+	// Runtime
+	config.ContainerRuntime = "rkt"
+	config.RktPath = "/usr/bin/rkt"
+	config.RktStage1Image = "coreos.com/rkt/stage1-coreos:1.11.0"
+
 	// Use the host's resolver config
 	if lk.Containerized {
 		config.ResolverConfig = "/rootfs/etc/resolv.conf"

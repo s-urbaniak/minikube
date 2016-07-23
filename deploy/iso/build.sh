@@ -41,6 +41,9 @@ docker build -t conntrack -f Dockerfile.conntrack .
 docker run conntrack cat conntrack > $tmpdir/conntrack
 chmod +x $tmpdir/conntrack
 
+# Install rkt
+./rkt.sh
+
 # Do the build.
 docker build -t iso .
 

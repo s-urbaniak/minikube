@@ -28,6 +28,14 @@ ADD conntrack $ROOTFS/usr/bin
 ADD bootlocal.sh $ROOTFS/tmp/bootlocal.sh
 RUN cat $ROOTFS/tmp/bootlocal.sh >> $ROOTFS/etc/rc.d/automount
 
+# install rkt
+ADD rkt/bin/rkt $ROOTFS/usr/bin
+ADD rkt/stage1-images $ROOTFS/usr/lib/rkt/stage1-images
+ADD rkt-api-service.init $ROOTFS/usr/local/etc/init.d/rkt-api-service
+ADD rkt-api-service.rc $ROOTFS/etc/rc.d/rkt-api-service
+RUN ln -fs /usr/local/etc/init.d/rkt-api-service $ROOTFS/etc/init.d/
+RUN echo "/etc/rc.d/rkt-api-service" >>$ROOTFS/opt/bootscript.sh
+
 # Get a specific version of Docker. This will overwrite the binary installed
 # in the base image.
 # The --strip-components=3 flag will have to change as we switch docker versions
